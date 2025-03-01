@@ -21,7 +21,7 @@ We used HiveQL queries to perform the following analytical tasks:
 
 ## Execution Steps
 
-1.  **Load data into a temporary table**
+#### 1. Load data into a temporary table
 CREATE TABLE temp_employees (
     emp_id INT,
     name STRING,
@@ -40,7 +40,7 @@ STORED AS TEXTFILE;
 LOAD DATA INPATH '/user/hue/employees.csv' INTO TABLE temp_employees;
 
 
--- 2. Create a partitioned table for employees
+#### 2. Create a partitioned table for employees
 CREATE TABLE employees (
     emp_id INT,
     name STRING,
@@ -56,7 +56,7 @@ FIELDS TERMINATED BY ','
 STORED AS PARQUET;
 
 
--- 3. Move data to the partitioned table
+#### 3. Move data to the partitioned table
 SET hive.exec.dynamic.partition = true;
 SET hive.exec.dynamic.partition.mode = nonstrict;
 
@@ -65,43 +65,42 @@ INSERT INTO TABLE employees PARTITION(department)
 SELECT emp_id, name, age, job_role, salary, project, join_date, department FROM temp_employees;
 
 
--- 4. Retrieve all employees who joined after 2015
+#### 4. Retrieve all employees who joined after 2015
 SELECT * FROM employees 
 WHERE year(FROM_UNIXTIME(UNIX_TIMESTAMP(join_date, 'yyyy-MM-dd'))) > 2015;
 
 
--- 5. Find the average salary of employees in each department
+#### 5. Find the average salary of employees in each department
 SELECT department, AVG(salary) AS avg_salary FROM employees GROUP BY department;
 
 
--- 6. Identify employees working on the 'Alpha' project
+#### 6. Identify employees working on the 'Alpha' project
 SELECT * FROM employees WHERE project = 'Alpha';
 
 
--- 7. Count the number of employees in each job role
+#### 7. Count the number of employees in each job role
 SELECT job_role, COUNT(*) AS emp_count FROM employees GROUP BY job_role;
 
 
--- 8. Retrieve employees whose salary is above the average salary of their department
+#### 8. Retrieve employees whose salary is above the average salary of their department
 SELECT e1.* FROM employees e1
 JOIN (SELECT department, AVG(salary) AS avg_salary FROM employees GROUP BY department) e2
 ON e1.department = e2.department WHERE e1.salary > e2.avg_salary;
 
 
--- 9. Find the department with the highest number of employees
+#### 9. Find the department with the highest number of employees
 SELECT department, COUNT(*) AS emp_count FROM employees
 GROUP BY department ORDER BY emp_count DESC LIMIT 1;
 
 
-
--- 10. Exclude employees with null values
+#### 10. Exclude employees with null values
 SELECT * FROM employees WHERE emp_id IS NOT NULL AND name IS NOT NULL AND age IS NOT NULL 
 AND job_role IS NOT NULL AND salary IS NOT NULL AND project IS NOT NULL AND join_date IS NOT NULL 
 AND department IS NOT NULL;
 
 
 
--- 11. Join employees and departments tables to display employee details with department location
+#### 11. Join employees and departments tables to display employee details with department location
 CREATE TABLE departments (
     dept_id INT,
     department_name STRING,
@@ -119,13 +118,13 @@ SELECT e.*, d.location FROM employees e
 JOIN departments d ON e.department = d.department_name;
 
 
--- 12. Rank employees within each department based on salary
+#### 12. Rank employees within each department based on salary
 SELECT emp_id, name, department, salary,
        RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS rank
 FROM employees;
 
 
--- 13. Find the top 3 highest-paid employees in each department
+#### 13. Find the top 3 highest-paid employees in each department
 SELECT * FROM (
     SELECT emp_id, name, department, salary,
            DENSE_RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS rank
