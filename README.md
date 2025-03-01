@@ -125,12 +125,13 @@ FROM employees;
 
 
 #### 13. Find the top 3 highest-paid employees in each department
+```sql
 SELECT * FROM (
     SELECT emp_id, name, department, salary,
            DENSE_RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS rank
     FROM employees
 ) ranked WHERE rank <= 3;
-
+```
 
 4. **Create and Load Departments Table**
     ```sql
