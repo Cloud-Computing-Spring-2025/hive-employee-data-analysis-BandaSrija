@@ -162,7 +162,7 @@ SELECT * FROM (
 
 For example, to get employees who joined after 2015:
 ```sql
-hive -e "SELECT * FROM employees WHERE year(FROM_UNIXTIME(UNIX_TIMESTAMP(join_date, 'yyyy-MM-dd'))) > 2015;"
+SELECT * FROM employees WHERE year(FROM_UNIXTIME(UNIX_TIMESTAMP(join_date, 'yyyy-MM-dd'))) > 2015;
 ```
 
 ### Output
