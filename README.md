@@ -165,6 +165,10 @@ For example, to get employees who joined after 2015:
 hive -e "SELECT * FROM employees WHERE year(FROM_UNIXTIME(UNIX_TIMESTAMP(join_date, 'yyyy-MM-dd'))) > 2015;"
 ```
 
+### Output
+
+Output of each query is stored in csv file with queryoutput as file name
+
 ## Challenges Faced
 1. **Date Parsing Issue**: `TO_DATE(join_date, 'yyyy-MM-dd')` gave errors, resolved by using `FROM_UNIXTIME(UNIX_TIMESTAMP(join_date, 'yyyy-MM-dd'))`.
 2. **Dynamic Partitioning**: Required enabling dynamic partition settings before inserting data.
