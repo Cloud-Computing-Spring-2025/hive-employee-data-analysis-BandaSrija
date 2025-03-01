@@ -1,0 +1,17 @@
+ranked.emp_id,ranked.name,ranked.department,ranked.salary,ranked.rank
+306,Kelly Weber,Finance,149707.46,1
+976,Jeffrey Castillo,Finance,149613.81,2
+798,Debbie Gray,Finance,149471.43,3
+234,Rhonda Jones,HR,148521.96,1
+30,Gregory Brown,HR,148323.7,2
+356,Pamela Thomas,HR,147578.0,3
+875,Danielle Cole,IT,149718.99,1
+64,Lori Navarro,IT,149585.91,2
+900,Katherine Fernandez,IT,148473.42,3
+388,John Alvarado,Marketing,149507.18,1
+474,Jason Smith,Marketing,149100.15,2
+888,Crystal Meyer,Marketing,148664.72,3
+432,Rebecca Ponce,Operations,149051.76,1
+795,Bradley Williams,Operations,147898.94,2
+823,Michael Edwards,Operations,147810.79,3
+NULL,name,department,NULL,1
